@@ -22,7 +22,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
       with:
-          path: ./envs/dev/ecs
+          path: /home/runner/work/jl_terraform_cloud/jl_terraform_cloud/envs/dev/ecs
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
