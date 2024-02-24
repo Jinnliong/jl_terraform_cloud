@@ -67,7 +67,7 @@ jobs:
         echo "Image Tag Check 2: $IMAGE_TAG" | cut -c 1-7
         pwd
         # Change the format for use in the tag - for example:
-        VALID_TAG=$(echo $IMAGE_TAG | tr -d '\n')
+        VALID_TAG=$IMAGE_TAG 
         echo "DEBUG: Generated VALID_TAG is: $VALID_TAG" 
         pwd
         echo "Full IMAGE_TAG: $IMAGE_TAG"
