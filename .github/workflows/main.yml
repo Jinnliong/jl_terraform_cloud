@@ -21,10 +21,10 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-      runs: pwd
+      run: pwd
       with:
           path: ./envs/dev/ecs
-      runs: pwd
+      run: pwd
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
