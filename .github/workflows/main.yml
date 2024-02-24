@@ -24,7 +24,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
       with:
-         path: envs/dev/ecs  # Adjust if your code is in a different subfolder
+         path: ./envs/dev/ecs  # Adjust if your code is in a different subfolder
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
