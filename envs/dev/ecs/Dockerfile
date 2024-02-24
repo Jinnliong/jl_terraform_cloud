@@ -5,7 +5,9 @@ FROM python:latest
 WORKDIR /app
 
 #Copy source code into working directory inside container
-COPY envs/dev/ecs /app 
+COPY envs/dev/ecs /app  
+COPY some-script.sh /app
+RUN /app/some-script.sh
 
 #Install flask inside container
 RUN pip install -r requirements.txt
