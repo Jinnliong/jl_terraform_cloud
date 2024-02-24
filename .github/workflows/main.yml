@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'envs/dev/ecs/**'
 
 env:            
   AWS_REGION: ap-southeast-1           
