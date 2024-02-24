@@ -62,7 +62,7 @@ jobs:
         ls -la
         docker buildx build -t ... -f envs/dev/ecs/Dockerfile .
         pwd
-        IMAGE_TAG=$(echo $IMAGE_TAG | tr -d '\n')
+        IMAGE_TAG=$(echo $IMAGE_TAG | tr -d '[:space:]')
         pwd
         echo "Image Tag Check 2: $IMAGE_TAG" | cut -c 1-7
         pwd
