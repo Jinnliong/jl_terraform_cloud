@@ -59,7 +59,7 @@ jobs:
         echo "DEBUG: My VALID_TAG is: $VALID_TAG" 
         docker buildx build -t ... -f envs/dev/ecs/Dockerfile /home/runner/work/jl_terraform_cloud/jl_terraform_cloud/envs/dev/ecs
         # Change the format for use in the tag - for example:
-        VALID_TAG=$(echo $IMAGE_TAG | cut -c 1-7 | tr -cd '[:lower:]')
+        VALID_TAG=$(echo $IMAGE_TAG | cut -c 1-7 | tr -d '[:lower:]' | tr -d '\n') 
         echo "Full IMAGE_TAG: $IMAGE_TAG"
         echo "Generated VALID_TAG: $VALID_TAG"
         docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$VALID_TAG
