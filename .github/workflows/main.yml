@@ -62,7 +62,7 @@ jobs:
         IMAGE_TAG=$(echo $IMAGE_TAG | tr -d '\n')
         echo "Image Tag Check 2: $IMAGE_TAG" | cut -c 1-7
         # Change the format for use in the tag - for example:
-        VALID_TAG=$(echo $IMAGE_TAG | cut -c 1-7 | tr '[:upper:]' '[:lower:]' | tr -d '\n')
+        VALID_TAG="test-tag"
         echo "Full IMAGE_TAG: $IMAGE_TAG"
         echo "Generated VALID_TAG: $VALID_TAG"
         docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$VALID_TAG
