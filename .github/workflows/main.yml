@@ -67,7 +67,6 @@ jobs:
         echo "Image Tag Check 2: $IMAGE_TAG" | cut -c 1-7
         pwd
         # Change the format for use in the tag - for example:
-        VALID_TAG=$IMAGE_TAG 
         echo "DEBUG: Generated VALID_TAG is: $VALID_TAG" 
         pwd
         echo "Full IMAGE_TAG: $IMAGE_TAG"
@@ -76,7 +75,7 @@ jobs:
         pwd
         env | grep IMAGE_TAG
         env | grep VALID_TAG
-        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$VALID_TAG
+        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         pwd
         docker push $ECR_REGISTRY/$ECR_REPOSITORY -a  # Push both tags
         pwd
