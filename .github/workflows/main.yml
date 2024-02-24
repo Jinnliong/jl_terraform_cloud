@@ -53,6 +53,8 @@ jobs:
         sudo apt-get update && sudo apt-get install xxd
         docker --version
         echo "Full IMAGE_TAG: $IMAGE_TAG"
+        echo $SHELL
+        echo $IMAGE_TAG | cut -c 1-7
         echo -n $VALID_TAG | xxd || true
         echo "DEBUG: My VALID_TAG is: $VALID_TAG" 
         docker buildx build -t ... -f envs/dev/ecs/Dockerfile /home/runner/work/jl_terraform_cloud/jl_terraform_cloud/envs/dev/ecs
