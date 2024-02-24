@@ -19,10 +19,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Print Working Directory
+      run: pwd
+
     - name: Checkout
       uses: actions/checkout@v3
       with:
           path: ./envs/dev/ecs
+
+    - name: Print Working Directory
       run: pwd
 
     - name: Configure AWS credentials
