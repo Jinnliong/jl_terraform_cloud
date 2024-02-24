@@ -21,8 +21,10 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+      runs: pwd
       with:
-          path: /home/runner/work/jl_terraform_cloud/jl_terraform_cloud/envs/dev/ecs
+          path: ./envs/dev/ecs
+      runs: pwd
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
