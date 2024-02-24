@@ -62,7 +62,7 @@ jobs:
         ls -la
         docker buildx build -t ... -f envs/dev/ecs/Dockerfile .
         pwd
-        IMAGE_TAG=$(echo $IMAGE_TAG | tr -d '[:space:]')
+        IMAGE_TAG=$(echo $IMAGE_TAG | tr -cd '[:alnum:]_.-')
         pwd
         echo "Image Tag Check 2: $IMAGE_TAG" | cut -c 1-7
         pwd
@@ -71,7 +71,7 @@ jobs:
         pwd
         echo "Full IMAGE_TAG: $IMAGE_TAG"
         pwd
-        echo "Generated VALID_TAG: $VALID_TAG"
+        echo "Generated VALID_TAG: $IMAGE_TAG"
         pwd
         env | grep IMAGE_TAG
         env | grep VALID_TAG
