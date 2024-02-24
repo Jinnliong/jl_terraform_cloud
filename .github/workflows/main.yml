@@ -58,15 +58,24 @@ jobs:
         echo -n $VALID_TAG | xxd || true
         echo "DEBUG: My VALID_TAG is: $VALID_TAG"
         printenv | grep IMAGE_TAG
+        pwd
         docker buildx build -t ... -f envs/dev/ecs/Dockerfile /home/runner/work/jl_terraform_cloud/jl_terraform_cloud/envs/dev/ecs
+        pwd
         IMAGE_TAG=$(echo $IMAGE_TAG | tr -d '\n')
+        pwd
         echo "Image Tag Check 2: $IMAGE_TAG" | cut -c 1-7
+        pwd
         # Change the format for use in the tag - for example:
         VALID_TAG=$(date +%Y%m%d%H%M)
+        pwd
         echo "Full IMAGE_TAG: $IMAGE_TAG"
+        pwd
         echo "Generated VALID_TAG: $VALID_TAG"
+        pwd
         docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$VALID_TAG
+        pwd
         docker push $ECR_REGISTRY/$ECR_REPOSITORY -a  # Push both tags
+        pwd
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$VALID_TAG" >> $GITHUB_OUTPUT
 
     - name: Download task definition
