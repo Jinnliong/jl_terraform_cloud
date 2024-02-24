@@ -47,7 +47,9 @@ jobs:
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest -f envs/dev/ecs/Dockerfile . 
         docker push $ECR_REGISTRY/$ECR_REPOSITORY -a
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
-   
+    
+    - name: Print Working Directory
+      run: pwd
         
     - name: Download task definition
       run: |
