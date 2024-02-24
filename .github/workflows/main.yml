@@ -59,7 +59,7 @@ jobs:
         echo "DEBUG: My VALID_TAG is: $VALID_TAG"
         printenv | grep IMAGE_TAG
         pwd
-        docker buildx build -t ... -f envs/dev/ecs/Dockerfile /home/runner/work/jl_terraform_cloud/jl_terraform_cloud/envs/dev/ecs
+        docker buildx build -t ... -f envs/dev/ecs/Dockerfile .
         pwd
         IMAGE_TAG=$(echo $IMAGE_TAG | tr -d '\n')
         pwd
