@@ -53,7 +53,7 @@ jobs:
         docker build -t ... -f envs/dev/ecs/Dockerfile /home/runner/work/jl_terraform_cloud/jl_terraform_cloud/
         pwd
         # Change the format for use in the tag - for example:
-        VALID_TAG=$(echo $IMAGE_TAG | cut -c 1-12)  # Keep the first 12 characters
+        VALID_TAG=$(echo $IMAGE_TAG | cut -c 1-12 | tr -cd '[:alnum:]._-')  # Keep the first 12 characters
         docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$VALID_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY -a  # Push both tags
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$VALID_TAG" >> $GITHUB_OUTPUT 
