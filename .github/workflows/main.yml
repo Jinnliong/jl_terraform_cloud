@@ -62,7 +62,8 @@ jobs:
         ls -la
         docker buildx build -t ... -f envs/dev/ecs/Dockerfile .
         pwd
-        IMAGE_TAG=$(echo $IMAGE_TAG | cut -c 1-128 | tr -cd '[:alnum:]_.-') 
+        IMAGE_TAG=$(echo $IMAGE_TAG | cut -c 1-128 | tr -cd '[:alnum:]_.-')
+        VALID_TAG=$(date +%Y%m%d%H%M) # Example format
         pwd
         echo "Image Tag Check 2: $IMAGE_TAG" | cut -c 1-7
         pwd
@@ -77,9 +78,8 @@ jobs:
         env | grep VALID_TAG
         docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         pwd
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY -a  # Push both tags
-        pwd
-        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$VALID_TAG" >> $GITHUB_OUTPUT
+        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$VALID_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY -a T
 
     - name: Download task definition
       run: |
