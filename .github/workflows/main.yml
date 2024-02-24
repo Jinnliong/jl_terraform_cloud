@@ -62,7 +62,7 @@ jobs:
         ls -la
         docker buildx build -t ... -f envs/dev/ecs/Dockerfile .
         pwd
-        IMAGE_TAG=$(echo $IMAGE_TAG | tr -cd '[:alnum:]_.-')
+        IMAGE_TAG=$(echo $IMAGE_TAG | cut -c 1-128 | tr -cd '[:alnum:]_.-') 
         pwd
         echo "Image Tag Check 2: $IMAGE_TAG" | cut -c 1-7
         pwd
