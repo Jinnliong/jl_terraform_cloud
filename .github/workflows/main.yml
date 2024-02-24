@@ -2,8 +2,7 @@ name: Deploy to Amazon ECS
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
 
 env:            
   AWS_REGION: ap-southeast-1           
@@ -19,16 +18,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Print Working Directory
-      run: pwd
-
     - name: Checkout
       uses: actions/checkout@v3
-      with:
-          path: ./envs/dev/ecs
-
-    - name: Print Working Directory
-      run: pwd
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -40,9 +31,6 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
-      
-    - name: Print Working Directory
-      run: pwd
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
@@ -50,37 +38,10 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ github.sha }}
       run: |
-        sudo apt-get update && sudo apt-get install xxd
-        docker --version
-        echo "Full IMAGE_TAG: $IMAGE_TAG"
-        echo $SHELL
-        echo "Image Tag Check 1: $IMAGE_TAG" | cut -c 1-7
-        echo -n $VALID_TAG | xxd || true
-        echo "DEBUG: My VALID_TAG is: $VALID_TAG"
-        printenv | grep IMAGE_TAG
-        pwd
-        ls -la
-        docker buildx build -t ... -f envs/dev/ecs/Dockerfile .
-        pwd
-        IMAGE_TAG=$(echo $IMAGE_TAG | cut -c 1-128 | tr -cd '[:alnum:]_.-')
-        VALID_TAG=$(date +%Y%m%d%H%M) # Example format
-        pwd
-        echo "Image Tag Check 2: $IMAGE_TAG" | cut -c 1-7
-        pwd
-        # Change the format for use in the tag - for example:
-        echo "DEBUG: Generated VALID_TAG is: $VALID_TAG" 
-        pwd
-        echo "Full IMAGE_TAG: $IMAGE_TAG"
-        pwd
-        echo "Generated VALID_TAG: $IMAGE_TAG"
-        pwd
-        env | grep IMAGE_TAG
-        env | grep VALID_TAG
-        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        pwd
-        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$VALID_TAG
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY -a T
-
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY -a
+        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+    
     - name: Download task definition
       run: |
         aws ecs describe-task-definition --task-definition $TASKDEF --query taskDefinition > task-definition.json
