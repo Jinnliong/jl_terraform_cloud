@@ -17,6 +17,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    env: development
 
     steps:
     - name: Print Working Directory
