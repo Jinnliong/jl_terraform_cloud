@@ -3,7 +3,7 @@ name: Deploy to Amazon ECS
 on:
   push:
     paths:
-      - 'main/envs/dev/ecs/**' 
+      - 'main/envs/dev/ecs' 
 
 env:            
   AWS_REGION: ap-southeast-1           
@@ -21,6 +21,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+      with:
+         path: main/envs/dev/ecs  # Adjust if your code is in a different subfolder
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
