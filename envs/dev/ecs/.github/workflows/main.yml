@@ -2,7 +2,8 @@ name: Deploy to Amazon ECS
 
 on:
   push:
-    branches: [ "main" ]
+     paths:
+       - 'main/envs/dev/ecs/**' 
 
 env:            
   AWS_REGION: ap-southeast-1           
