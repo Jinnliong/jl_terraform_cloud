@@ -50,14 +50,15 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ github.sha }}
       run: |
-        sudo apt-get update && sudo apt-get install xxd
-        docker --version  
+        sudo apt-get update && sudo apt-get install xxd  
+        docker --version
+        echo "Full IMAGE_TAG: $IMAGE_TAG" 
+        echo -n $VALID_TAG | xxd     
         docker buildx build -t ... -f envs/dev/ecs/Dockerfile /home/runner/work/jl_terraform_cloud/jl_terraform_cloud/envs/dev/ecs
         # Change the format for use in the tag - for example:
         VALID_TAG=$(echo $IMAGE_TAG | cut -c 1-7 | tr -cd '[:lower:]')
         echo "Full IMAGE_TAG: $IMAGE_TAG"
         echo "Generated VALID_TAG: $VALID_TAG"
-        echo -n $VALID_TAG | xxd  
         docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$VALID_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY -a  # Push both tags
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$VALID_TAG" >> $GITHUB_OUTPUT 
