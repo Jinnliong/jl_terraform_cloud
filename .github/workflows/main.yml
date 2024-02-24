@@ -68,6 +68,7 @@ jobs:
         pwd
         # Change the format for use in the tag - for example:
         VALID_TAG=$(echo $IMAGE_TAG | tr -d '\n')
+        echo "DEBUG: Generated VALID_TAG is: $VALID_TAG" 
         pwd
         echo "Full IMAGE_TAG: $IMAGE_TAG"
         pwd
