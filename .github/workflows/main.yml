@@ -2,8 +2,8 @@ name: Deploy to Amazon ECS
 
 on:
   push:
-    branches: [ "main" ]
-      path: ./envs/dev/ecs
+    branches:
+      - main
 
 env:            
   AWS_REGION: ap-southeast-1           
@@ -21,6 +21,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+      with:
+          path: ./envs/dev/ecs
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -32,6 +34,9 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
+      
+    - name: Print Working Directory
+      run: pwd
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
@@ -39,10 +44,12 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ github.sha }}
       run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+        pwd
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest -f /home/runner/work/jl_terraform_cloud/jl_terraform_cloud/envs/dev/ecs/Dockerfile /home/runner/work/jl_terraform_cloud/jl_terraform_cloud/envs/dev/ecs
+        pwd
         docker push $ECR_REGISTRY/$ECR_REPOSITORY -a
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
-    
+        
     - name: Download task definition
       run: |
         aws ecs describe-task-definition --task-definition $TASKDEF --query taskDefinition > task-definition.json
