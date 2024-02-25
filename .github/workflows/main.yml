@@ -21,8 +21,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-      with:
-          path: ./envs/dev/ecs
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -44,9 +42,7 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ github.sha }}
       run: |
-        pwd
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest -f /home/runner/work/jl_terraform_cloud/jl_terraform_cloud/envs/dev/ecs/Dockerfile /home/runner/work/jl_terraform_cloud/jl_terraform_cloud/envs/dev/ecs
-        pwd
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY -a
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
         
